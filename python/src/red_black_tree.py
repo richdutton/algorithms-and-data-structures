@@ -2,7 +2,7 @@ class _NilNode:
     def __init__(self, parent):
         self.parent = parent
 
-    def find(self, key):
+    def __contains__(self, _):
         return False
 
 
@@ -14,11 +14,22 @@ class _Node:
         self.left = _NilNode(self)
         self.right = _NilNode(self)
 
-    def find(self, key):
+    def __contains__(self, key):
         if key == self.key:
             return True
 
-        return self.left.find(key) if key < self.key else self.right.find(key)
+        return key in self.left if key < self.key else key in self.right
+
+    def insert(self, key):
+        if key == self.key:
+            raise KeyError()
+
+        insertion_point = 'left' if key < self.key else 'right'
+
+        if isinstance(getattr(self, insertion_point), _NilNode):
+            setattr(self, insertion_point, _Node('red', self, key))
+        else:
+            getattr(self, insertion_point).insert(key)
 
 
 class RedBlackTree:
@@ -29,21 +40,8 @@ class RedBlackTree:
         if isinstance(self._root, _NilNode):
             self._root = _Node('black', None, key)
         else:
-
-            potential_parent = self._root
-            while True:
-                if key == potential_parent.key:
-                    raise KeyError()
-
-                # todo: this should be on the potential parent
-                insertion_point = 'left' if key < potential_parent.key else 'right'
-
-                if isinstance(getattr(potential_parent, insertion_point), _NilNode):
-                    setattr(potential_parent, insertion_point, _Node('red', potential_parent, key))
-                    break
-                else:
-                    potential_parent = getattr(potential_parent, insertion_point)
+            self._root.insert(key)
 
     def __contains__(self, key):
-        return self._root.find(key)
+        return key in self._root
 
