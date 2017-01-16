@@ -1,59 +1,49 @@
-import random
+class _NilNode:
+    def __init__(self, parent):
+        self.parent = parent
+
+    def find(self, key):
+        return False
 
 
-class RedBlackTreeNode:
-    def __init__(self, color='black', key=None, value=None):
-        self._color = color
+class _Node:
+    def __init__(self, color, parent, key):
+        self.color = color
         self.key = key
-        self._value = value
-        self.left = None
-        self.right = None
+        self.parent = parent
+        self.left = _NilNode(self)
+        self.right = _NilNode(self)
 
-        self.assert_valid()
+    def find(self, key):
+        if key == self.key:
+            return True
 
-    def assert_valid(self):
-        assert self._color in ('black', 'red')
-
-        if self.key is None:
-            assert self._value is None
-            assert self.left is None
-            assert self.right is None
-            assert self._color is 'black'
+        return self.left.find(key) if key < self.key else self.right.find(key)
 
 
 class RedBlackTree:
     def __init__(self):
-        self.left = None
-        self.right = None
+        self._root = _NilNode(self)
 
-    def assert_valid(self):
-        pass
+    def insert(self, key):
+        if isinstance(self._root, _NilNode):
+            self._root = _Node('black', None, key)
+        else:
 
-    def insert(self, key, value):
-        potential_parent = self
+            potential_parent = self._root
+            while True:
+                if key == potential_parent.key:
+                    raise KeyError()
 
-        while True:
-            left_or_right = random.choice(('left', 'right'))
-            if potential_parent.__dict__[left_or_right] is None:
-                potential_parent.__dict__[left_or_right] = RedBlackTreeNode('black', key, value)
-                potential_parent.assert_valid()
-                break
-            potential_parent = left_or_right
+                # todo: this should be on the potential parent
+                insertion_point = 'left' if key < potential_parent.key else 'right'
 
-    def _find(self, node, key):
-        if node is None:
-            return False
+                if isinstance(getattr(potential_parent, insertion_point), _NilNode):
+                    setattr(potential_parent, insertion_point, _Node('red', potential_parent, key))
+                    break
+                else:
+                    potential_parent = getattr(potential_parent, insertion_point)
 
-        if self._find(node.left, key):
-            return True
+    def __contains__(self, key):
+        return self._root.find(key)
 
-        if node != self and node.key == key:
-            return True
-
-        if self._find(node.right, key):
-            return True
-
-        return False
-
-    def find(self, key):
-        return self._find(self, key)
