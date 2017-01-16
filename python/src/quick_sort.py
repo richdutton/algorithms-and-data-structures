@@ -7,6 +7,7 @@ def quick_sort(array):
     if len(array) < 2:
         return array
 
+    # todo:: this seems to be a mix of in place and not. kinda surprised it works
     if len(array) == 2:
         if array[0] > array[1]:
             array[0], array[1] = array[1], array[0]

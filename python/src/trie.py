@@ -11,10 +11,13 @@ class _TrieNode:
         if fragment:
             self._children.append(_TrieNode(*self._split_fragment(fragment)))
 
+    # todo: this doesn't really add value
     @property
     def char(self):
         return self._char
 
+    # todo: sort on addition? binary search. takes n * log(n) but * insertion cost of n so n^2 * log not
+    # sorting after will take n * log(n) so better
     def add_fragment(self, fragment):
         first_char, remaining_fragment = self._split_fragment(fragment)
         for child in self._children:
