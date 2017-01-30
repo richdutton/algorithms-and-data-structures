@@ -7,11 +7,10 @@ def quick_sort(array):
     if len(array) < 2:
         return array
 
-    # todo:: this seems to be a mix of in place and not. kinda surprised it works
+    # todo: this should be unnecessary given below. test this.
     if len(array) == 2:
         if array[0] > array[1]:
-            array[0], array[1] = array[1], array[0]
-        return array
+            return array[1], array[0]
 
     pivot_index = len(array) // 2  # randint(0, length) + start_index
     pivot = array[pivot_index]
