@@ -35,3 +35,7 @@ def test_dijkstra_grokking(grokking_weighted_graph):
 
 def test_dijkstra_grokking_large(grokking_weighted_graph_large):
     assert dijkstra_cost(grokking_weighted_graph_large, 'BOOK', 'PIANO') == 35
+
+
+if __name__ == '__main__':
+    pytest.main()

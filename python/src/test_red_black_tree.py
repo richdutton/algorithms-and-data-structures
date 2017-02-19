@@ -93,3 +93,7 @@ def test_three_element_tree_find_success(three_element_tree):
 
 def test_three_element_tree_find_failure(three_element_tree):
     assert _DEFAULT_KEY_4 not in three_element_tree
+
+
+if __name__ == '__main__':
+    pytest.main()

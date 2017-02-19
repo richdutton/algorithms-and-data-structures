@@ -53,7 +53,8 @@ def tracking_breadth_first_search(graph, node_1, node_2):
     return False
 
 
-def alternating_breadth_first_search(graph, node_1, node_2):
+# todo: why isn't this faster?
+def bidirectional_breadth_first_search(graph, node_1, node_2):
     visited = set()
     visited_alternate = set()
     queue = deque([node_1])
@@ -68,7 +69,8 @@ def alternating_breadth_first_search(graph, node_1, node_2):
             visited.add(node)
 
             if node == node_2:
-                alternating_breadth_first_search.__len__ = len(visited) + len(visited_alternate)
+                # todo: this len thing is a hack
+                bidirectional_breadth_first_search.__len__ = len(visited) + len(visited_alternate)
                 return True
 
             for next_node in graph.connections[node]:

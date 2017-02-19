@@ -9,7 +9,6 @@ _SCALING_FACTOR = 2
 _Item = namedtuple('_Item', 'key value')
 
 
-# todo: unit test resizing
 class HashTable:
     def __init__(self):
         self._rows = [None] * _INITIAL_ROW_COUNT
@@ -32,12 +31,11 @@ class HashTable:
     def _set_item_on_rows(rows, key, value):
         row_index = hash(key) % len(rows)
 
-        # todo: this looks like a defaultdict of list
         if not rows[row_index]:
             assert rows[row_index] is None
             rows[row_index] = []
 
-        # todo: keep sorted and bisect? probably not efficient but tree is
+        # using a tree here would be faster
         rows[row_index].append(_Item(key, value))
 
     def _resize(self):

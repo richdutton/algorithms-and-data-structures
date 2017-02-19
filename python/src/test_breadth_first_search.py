@@ -8,7 +8,7 @@ import random
 import pygraphviz as pgv
 import pytest
 
-from .breadth_first_search import Graph, simple_breadth_first_search, tracking_breadth_first_search, alternating_breadth_first_search
+from .breadth_first_search import Graph, simple_breadth_first_search, tracking_breadth_first_search, bidirectional_breadth_first_search
 
 random.seed(42)
 
@@ -73,7 +73,7 @@ def save_a_graph(a_graph):
     a_graph.write('large.dot')
     a_graph.layout()
     a_graph.draw('large.png')
-    subprocess.Popen(['open', './large.png'])
+    # subprocess.Popen(['open', './large.png'])
 
 
 def test_convert_and_save_graph():
@@ -90,7 +90,10 @@ def test_tracking_breadth_first_search_success(small_graph):
     assert path == [2, 1, 6, 3]
 
 
-def test_alternating_breadth_first_search_success(large_graph):
+def test_bidirectional_breadth_first_search_success(large_graph):
     assert simple_breadth_first_search(large_graph, _NODE_1, _NODE_2)
-    assert alternating_breadth_first_search(large_graph, _NODE_1, _NODE_2)
-    import pdb; pdb.set_trace()
+    assert bidirectional_breadth_first_search(large_graph, _NODE_1, _NODE_2)
+
+
+if __name__ == '__main__':
+    pytest.main()

@@ -1,4 +1,4 @@
-# note: this is untested and may contain subtle bugs
+# todo: this is untested and may contain subtle bugs
 
 
 def _copy_array(array, helper, low, high):

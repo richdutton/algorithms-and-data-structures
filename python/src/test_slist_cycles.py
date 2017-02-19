@@ -103,3 +103,7 @@ def test_triple_cycles_2_to_1(triple_cycles_from_2_to_1):
 
 def test_triple_cycles_2_to_2(triple_cycles_from_2_to_2):
     assert has_cycles(triple_cycles_from_2_to_2)
+
+
+if __name__ == '__main__':
+    pytest.main()
