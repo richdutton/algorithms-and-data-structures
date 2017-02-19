@@ -4,12 +4,12 @@ from random import seed
 import pytest
 
 # from .selection_sort import selection_sort
-from .quick_sort import quick_sort, in_place_quick_sort
+from .quick_sort import quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate
 # from .quick_sort_2 import in_place_quick_sort
 
 seed(42)
 # sort = selection_sort
-sort = in_place_quick_sort
+sort = quick_sort_alternate
 # sort = quick_sort
 
 
