@@ -2,7 +2,6 @@
 # pylint:disable=C0103
 
 from collections import defaultdict
-import subprocess
 import random
 
 import pygraphviz as pgv
@@ -63,8 +62,8 @@ def graph_to_a_graph(graph):
     for node in graph.nodes:
         a_graph.add_node(node)
         for connected_node in graph.connections[node]:
-            # todo: we'll add nodes twice but whatever
-            a_graph.add_edge(node, connected_node)
+            if node < connected_node:
+                a_graph.add_edge(node, connected_node)
 
     return a_graph
 
@@ -73,6 +72,7 @@ def save_a_graph(a_graph):
     a_graph.write('large.dot')
     a_graph.layout()
     a_graph.draw('large.png')
+    # import subprocess
     # subprocess.Popen(['open', './large.png'])
 
 
