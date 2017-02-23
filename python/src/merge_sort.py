@@ -22,7 +22,7 @@ def _merge(array, helper, low, middle, high):
             helper_right += 1
         current += 1
 
-    remaining = middle - helper_left
+    remaining = middle + 1 - helper_left
     for index in range(remaining):
         array[current + index] = helper[helper_left + index]
 
@@ -36,5 +36,9 @@ def merge_sort_(array, helper, low, high):
 
 
 def merge_sort(array):
-    helper = [] * len(array)
-    merge_sort_(array, helper, 0, len(array))
+    assert array is not None and isinstance(array, list)
+
+    helper = [None] * len(array)
+    merge_sort_(array, helper, 0, len(array) - 1)
+
+    return array

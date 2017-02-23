@@ -1,17 +1,7 @@
-Euclid's algorithm
-
-binary search
-
-appnexus videos
-
-algorithm design - *
-
-grok -
-dynamic programming
-bloom filters
-hyperloglog
-
-cracking -
-
-merge sort
-
+- euclid's algorithm
+- binary search
+- algorithm design - *
+- grokking
+    - dynamic programming
+    - bloom filters
+    - hyperloglog

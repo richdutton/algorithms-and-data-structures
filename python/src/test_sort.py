@@ -5,13 +5,14 @@ from random import seed
 
 import pytest
 
+from .merge_sort import merge_sort
 from .selection_sort import selection_sort
 from .quick_sort import quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate
 
 seed(42)
 
 
-@pytest.fixture(params=[selection_sort, quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate])
+@pytest.fixture(params=[merge_sort, selection_sort, quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate])
 def sort(request):
     return request.param
 
@@ -56,7 +57,7 @@ def test_unsorted_three_element_array_is_sorted(sort):
 
 
 def test_large_unsorted_positive_array_is_sorted(sort):
-    array = [14, 61, 98, 45, 75, 24, 85, 26, 27, 50]  # , 21, 31, 3, 48, 12, 65, 39, 22, 22, 26, 10, 64, 82, 10, 31, 84, 26, 54, 34, 52]
+    array = [14, 61, 98, 45, 75, 24, 85, 26, 27, 50, 21, 31, 3, 48, 12, 65, 39, 22, 22, 26, 10, 64, 82, 10, 31, 84, 26, 54, 34, 52]
     sorted_array = sort(array)
 
     assert sorted_array == sorted(array)
