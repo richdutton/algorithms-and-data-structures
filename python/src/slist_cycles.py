@@ -11,8 +11,8 @@ def has_cycles(node):
     while True:
         slow = slow.next_
         fast = fast.next_
-        # todo: unnecessary to check slow - by defn fast will hit end sooner
-        if slow is None or fast is None:
+
+        if fast is None:
             return False
 
         fast = fast.next_
