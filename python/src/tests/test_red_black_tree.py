@@ -4,7 +4,7 @@
 
 import pytest
 
-from .red_black_tree import RedBlackTree, _NilNode
+from pkg.red_black_tree import RedBlackTree, _NilNode
 
 _DEFAULT_KEY = 42
 _DEFAULT_KEY_2 = _DEFAULT_KEY * 2

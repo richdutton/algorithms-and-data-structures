@@ -7,7 +7,7 @@ import random
 import pygraphviz as pgv
 import pytest
 
-from .breadth_first_search import Graph, simple_breadth_first_search, tracking_breadth_first_search, bidirectional_breadth_first_search
+from pkg.breadth_first_search import Graph, simple_breadth_first_search, tracking_breadth_first_search, bidirectional_breadth_first_search
 
 random.seed(42)
 

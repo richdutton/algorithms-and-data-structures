@@ -2,7 +2,7 @@
 
 import pytest
 
-from .slist_cycles import Node, has_cycles
+from pkg.slist_cycles import Node, has_cycles
 
 
 @pytest.fixture

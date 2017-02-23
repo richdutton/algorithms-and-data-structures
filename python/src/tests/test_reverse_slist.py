@@ -2,7 +2,7 @@
 
 import pytest
 
-from .reverse_slist import reverse_slist, Node
+from pkg.reverse_slist import reverse_slist, Node
 
 
 @pytest.fixture

@@ -3,7 +3,7 @@
 
 import pytest
 
-from .hash_table import HashTable, _INITIAL_ROW_COUNT
+from pkg.hash_table import HashTable, _INITIAL_ROW_COUNT
 
 _KEY = 42
 _VALUE = 'forty two'

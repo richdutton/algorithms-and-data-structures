@@ -5,9 +5,9 @@ from random import seed
 
 import pytest
 
-from .merge_sort import merge_sort
-from .selection_sort import selection_sort
-from .quick_sort import quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate
+from pkg.merge_sort import merge_sort
+from pkg.selection_sort import selection_sort
+from pkg.quick_sort import quick_sort, in_place_quick_sort, quick_sort_iterative, quick_sort_alternate
 
 seed(42)
 

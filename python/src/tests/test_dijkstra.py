@@ -2,7 +2,7 @@
 
 import pytest
 
-from .dijkstra import WeightedGraph, ConnectionAndWeight, PathAndCost, dijkstra_cost
+from pkg.dijkstra import WeightedGraph, ConnectionAndWeight, dijkstra_cost
 
 
 @pytest.fixture
