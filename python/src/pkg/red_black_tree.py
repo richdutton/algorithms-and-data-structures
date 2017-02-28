@@ -9,6 +9,7 @@ class _NilNode:
         return False
 
 
+# todo: name key, rather than _key, is incompatible with tests. ditto left and right
 class _Node:
     def __init__(self, color, parent, key):
         self.color = color

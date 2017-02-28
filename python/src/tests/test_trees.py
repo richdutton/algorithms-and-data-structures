@@ -4,7 +4,9 @@
 
 import pytest
 
-from pkg.red_black_tree import RedBlackTree, _NilNode
+from pkg.red_black_tree import _NilNode
+from pkg.avl_tree import AVLTree
+_TREE_TYPE = AVLTree
 
 _DEFAULT_KEY = 42
 _DEFAULT_KEY_2 = _DEFAULT_KEY * 2
@@ -15,7 +17,7 @@ _DEFAULT_KEY_4 = _DEFAULT_KEY_3 * 2
 
 @pytest.fixture
 def zero_element_tree():
-    return RedBlackTree()
+    return _TREE_TYPE()
 
 
 @pytest.fixture
@@ -36,32 +38,37 @@ def three_element_tree(two_element_tree):
     return two_element_tree
 
 
+# todo: this should be less lenient for RedBlackTree
+def assert_not_node(node):
+    assert node is None or isinstance(node, _NilNode)
+
+
 def test_zero_element_tree(zero_element_tree):
-    assert isinstance(zero_element_tree._root, _NilNode)
+    assert_not_node(zero_element_tree._root)
 
 
 def test_one_element_tree(one_element_tree):
-    assert one_element_tree._root.key == _DEFAULT_KEY
-    assert isinstance(one_element_tree._root.left, _NilNode)
-    assert isinstance(one_element_tree._root.right, _NilNode)
+    assert one_element_tree._root._key == _DEFAULT_KEY
+    assert_not_node(one_element_tree._root._left)
+    assert_not_node(one_element_tree._root._right)
 
 
 def test_two_element_tree(two_element_tree):
-    assert two_element_tree._root.key == _DEFAULT_KEY
-    assert isinstance(two_element_tree._root.left, _NilNode)
-    assert two_element_tree._root.right.key == _DEFAULT_KEY_2
-    assert isinstance(two_element_tree._root.right.left, _NilNode)
-    assert isinstance(two_element_tree._root.right.right, _NilNode)
+    assert two_element_tree._root._key == _DEFAULT_KEY
+    assert_not_node(two_element_tree._root._left)
+    assert two_element_tree._root._right._key == _DEFAULT_KEY_2
+    assert_not_node(two_element_tree._root._right._left)
+    assert_not_node(two_element_tree._root._right._right)
 
 
 def test_three_element_tree(three_element_tree):
-    assert three_element_tree._root.key == _DEFAULT_KEY
-    assert isinstance(three_element_tree._root.left, _NilNode)
-    assert three_element_tree._root.right.key == _DEFAULT_KEY_2
-    assert isinstance(three_element_tree._root.right.left, _NilNode)
-    assert three_element_tree._root.right.right.key == _DEFAULT_KEY_3
-    assert isinstance(three_element_tree._root.right.right.left, _NilNode)
-    assert isinstance(three_element_tree._root.right.right.right, _NilNode)
+    assert three_element_tree._root._key == _DEFAULT_KEY
+    assert_not_node(three_element_tree._root._left)
+    assert three_element_tree._root._right._key == _DEFAULT_KEY_2
+    assert_not_node(three_element_tree._root._right._left)
+    assert three_element_tree._root._right._right._key == _DEFAULT_KEY_3
+    assert_not_node(three_element_tree._root._right._right._left)
+    assert_not_node(three_element_tree._root._right._right._right)
 
 
 def test_zero_element_tree_find_failure(zero_element_tree):

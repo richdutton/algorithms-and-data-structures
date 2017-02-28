@@ -34,6 +34,9 @@ def tracking_breadth_first_search(graph, node_1, node_2):
 
         if node not in visited:
             # todo: will this be correct in the face of overwrites?
+            # when could overwrite happen?
+            # A->B1; A->B2; B1->D1; B2->C2; -> c2 -> D1
+            # write a test to verify this case breaks and then fix to check node is not already in visited
             visited[node] = parent
 
             if node == node_2:
