@@ -131,37 +131,37 @@ def test_wikipedia_example_avl_tree_balanced_is_balanced(wikipedia_example_avl_t
 def test_wikipedia_example_avl_tree_balanced_heights(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree._root._calculate_height() == 5
-    assert tree._root._left._calculate_height() == 3
-    assert tree._root._right._calculate_height() == 4
-    assert tree._root._left._left._calculate_height() == 2
-    assert tree._root._left._right._calculate_height() == 1
-    assert tree._root._right._left._calculate_height() == 2
-    assert tree._root._right._right._calculate_height() == 3
-    assert tree._root._left._left._left._calculate_height() == 1
-    assert tree._root._right._left._right._calculate_height() == 1
-    assert tree._root._right._right._left._calculate_height() == 2
-    assert tree._root._right._right._right._calculate_height() == 1
-    assert tree._root._right._right._left._left._calculate_height() == 1
-    assert tree._root._right._right._left._right._calculate_height() == 1
+    assert tree._root._height == 5
+    assert tree._root._left._height == 3
+    assert tree._root._right._height == 4
+    assert tree._root._left._left._height == 2
+    assert tree._root._left._right._height == 1
+    assert tree._root._right._left._height == 2
+    assert tree._root._right._right._height == 3
+    assert tree._root._left._left._left._height == 1
+    assert tree._root._right._left._right._height == 1
+    assert tree._root._right._right._left._height == 2
+    assert tree._root._right._right._right._height == 1
+    assert tree._root._right._right._left._left._height == 1
+    assert tree._root._right._right._left._right._height == 1
 
 
 def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree._root._calculate_balance_factor() == 1
-    assert tree._root._left._calculate_balance_factor() == -1
-    assert tree._root._right._calculate_balance_factor() == 1
-    assert tree._root._left._left._calculate_balance_factor() == -1
-    assert tree._root._left._right._calculate_balance_factor() == 0
-    assert tree._root._right._left._calculate_balance_factor() == 1
-    assert tree._root._right._right._calculate_balance_factor() == -1
-    assert tree._root._left._left._left._calculate_balance_factor() == 0
-    assert tree._root._right._left._right._calculate_balance_factor() == 0
-    assert tree._root._right._right._left._calculate_balance_factor() == 0
-    assert tree._root._right._right._right._calculate_balance_factor() == 0
-    assert tree._root._right._right._left._left._calculate_balance_factor() == 0
-    assert tree._root._right._right._left._right._calculate_balance_factor() == 0
+    assert tree._root._balance_factor == 1
+    assert tree._root._left._balance_factor == -1
+    assert tree._root._right._balance_factor == 1
+    assert tree._root._left._left._balance_factor == -1
+    assert tree._root._left._right._balance_factor == 0
+    assert tree._root._right._left._balance_factor == 1
+    assert tree._root._right._right._balance_factor == -1
+    assert tree._root._left._left._left._balance_factor == 0
+    assert tree._root._right._left._right._balance_factor == 0
+    assert tree._root._right._right._left._balance_factor == 0
+    assert tree._root._right._right._right._balance_factor == 0
+    assert tree._root._right._right._left._left._balance_factor == 0
+    assert tree._root._right._right._left._right._balance_factor == 0
 
 
 if __name__ == '__main__':
