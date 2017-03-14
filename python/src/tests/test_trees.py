@@ -38,6 +38,14 @@ def three_element_tree(two_element_tree):
     return two_element_tree
 
 
+@pytest.fixture
+def wikipedia_example_avl_tree_balanced(zero_element_tree):
+    tree = zero_element_tree
+    for node in ['j', 'f', 'p', 'd', 'g', 'l', 'v', 'c', 'n', 's', 'x', 'q', 'u']:
+        tree.insert(node)
+    return tree
+
+
 # todo: this should be less lenient for RedBlackTree
 def assert_not_node(node):
     assert node is None or isinstance(node, _NilNode)
@@ -100,6 +108,60 @@ def test_three_element_tree_find_success(three_element_tree):
 
 def test_three_element_tree_find_failure(three_element_tree):
     assert _DEFAULT_KEY_4 not in three_element_tree
+
+
+def test_wikipedia_example_avl_tree_balanced_is_balanced(wikipedia_example_avl_tree_balanced):
+    tree = wikipedia_example_avl_tree_balanced
+
+    assert tree._root._key == 'j'
+    assert tree._root._left._key == 'f'
+    assert tree._root._right._key == 'p'
+    assert tree._root._left._left._key == 'd'
+    assert tree._root._left._right._key == 'g'
+    assert tree._root._right._left._key == 'l'
+    assert tree._root._right._right._key == 'v'
+    assert tree._root._left._left._left._key == 'c'
+    assert tree._root._right._left._right._key == 'n'
+    assert tree._root._right._right._left._key == 's'
+    assert tree._root._right._right._right._key == 'x'
+    assert tree._root._right._right._left._left._key == 'q'
+    assert tree._root._right._right._left._right._key == 'u'
+
+
+def test_wikipedia_example_avl_tree_balanced_heights(wikipedia_example_avl_tree_balanced):
+    tree = wikipedia_example_avl_tree_balanced
+
+    assert tree._root._calculate_height() == 5
+    assert tree._root._left._calculate_height() == 3
+    assert tree._root._right._calculate_height() == 4
+    assert tree._root._left._left._calculate_height() == 2
+    assert tree._root._left._right._calculate_height() == 1
+    assert tree._root._right._left._calculate_height() == 2
+    assert tree._root._right._right._calculate_height() == 3
+    assert tree._root._left._left._left._calculate_height() == 1
+    assert tree._root._right._left._right._calculate_height() == 1
+    assert tree._root._right._right._left._calculate_height() == 2
+    assert tree._root._right._right._right._calculate_height() == 1
+    assert tree._root._right._right._left._left._calculate_height() == 1
+    assert tree._root._right._right._left._right._calculate_height() == 1
+
+
+def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
+    tree = wikipedia_example_avl_tree_balanced
+
+    assert tree._root._calculate_balance_factor() == 1
+    assert tree._root._left._calculate_balance_factor() == -1
+    assert tree._root._right._calculate_balance_factor() == 1
+    assert tree._root._left._left._calculate_balance_factor() == -1
+    assert tree._root._left._right._calculate_balance_factor() == 0
+    assert tree._root._right._left._calculate_balance_factor() == 1
+    assert tree._root._right._right._calculate_balance_factor() == -1
+    assert tree._root._left._left._left._calculate_balance_factor() == 0
+    assert tree._root._right._left._right._calculate_balance_factor() == 0
+    assert tree._root._right._right._left._calculate_balance_factor() == 0
+    assert tree._root._right._right._right._calculate_balance_factor() == 0
+    assert tree._root._right._right._left._left._calculate_balance_factor() == 0
+    assert tree._root._right._right._left._right._calculate_balance_factor() == 0
 
 
 if __name__ == '__main__':
