@@ -17,7 +17,7 @@ _DEFAULT_KEY_4 = _DEFAULT_KEY_3 * 2
 
 @pytest.fixture
 def zero_element_tree():
-    return _TREE_TYPE()
+    return _TREE_TYPE(rebalance=False)
 
 
 @pytest.fixture
@@ -146,23 +146,22 @@ def test_wikipedia_example_avl_tree_balanced_heights(wikipedia_example_avl_tree_
     assert tree.root._right._right._left._right._height == 1
 
 
-# todo: test with rebalancing off?
-# def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
-#     tree = wikipedia_example_avl_tree_balanced
+def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
+    tree = wikipedia_example_avl_tree_balanced
 
-#     assert tree.root._balance_factor == 1
-#     assert tree.root._left._balance_factor == -1
-#     assert tree.root._right._balance_factor == 1
-#     assert tree.root._left._left._balance_factor == -1
-#     assert tree.root._left._right._balance_factor == 0
-#     assert tree.root._right._left._balance_factor == 1
-#     assert tree.root._right._right._balance_factor == -1
-#     assert tree.root._left._left._left._balance_factor == 0
-#     assert tree.root._right._left._right._balance_factor == 0
-#     assert tree.root._right._right._left._balance_factor == 0
-#     assert tree.root._right._right._right._balance_factor == 0
-#     assert tree.root._right._right._left._left._balance_factor == 0
-#     assert tree.root._right._right._left._right._balance_factor == 0
+    assert tree.root._balance_factor == 1
+    assert tree.root._left._balance_factor == -1
+    assert tree.root._right._balance_factor == 1
+    assert tree.root._left._left._balance_factor == -1
+    assert tree.root._left._right._balance_factor == 0
+    assert tree.root._right._left._balance_factor == 1
+    assert tree.root._right._right._balance_factor == -1
+    assert tree.root._left._left._left._balance_factor == 0
+    assert tree.root._right._left._right._balance_factor == 0
+    assert tree.root._right._right._left._balance_factor == 0
+    assert tree.root._right._right._right._balance_factor == 0
+    assert tree.root._right._right._left._left._balance_factor == 0
+    assert tree.root._right._right._left._right._balance_factor == 0
 
 
 # todo: use or modify existing fixtures
