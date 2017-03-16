@@ -52,31 +52,31 @@ def assert_not_node(node):
 
 
 def test_zero_element_tree(zero_element_tree):
-    assert_not_node(zero_element_tree._root)
+    assert_not_node(zero_element_tree.root)
 
 
 def test_one_element_tree(one_element_tree):
-    assert one_element_tree._root._key == _DEFAULT_KEY
-    assert_not_node(one_element_tree._root._left)
-    assert_not_node(one_element_tree._root._right)
+    assert one_element_tree.root._key == _DEFAULT_KEY
+    assert_not_node(one_element_tree.root._left)
+    assert_not_node(one_element_tree.root._right)
 
 
 def test_two_element_tree(two_element_tree):
-    assert two_element_tree._root._key == _DEFAULT_KEY
-    assert_not_node(two_element_tree._root._left)
-    assert two_element_tree._root._right._key == _DEFAULT_KEY_2
-    assert_not_node(two_element_tree._root._right._left)
-    assert_not_node(two_element_tree._root._right._right)
+    assert two_element_tree.root._key == _DEFAULT_KEY
+    assert_not_node(two_element_tree.root._left)
+    assert two_element_tree.root._right._key == _DEFAULT_KEY_2
+    assert_not_node(two_element_tree.root._right._left)
+    assert_not_node(two_element_tree.root._right._right)
 
 
 def test_three_element_tree(three_element_tree):
-    assert three_element_tree._root._key == _DEFAULT_KEY
-    assert_not_node(three_element_tree._root._left)
-    assert three_element_tree._root._right._key == _DEFAULT_KEY_2
-    assert_not_node(three_element_tree._root._right._left)
-    assert three_element_tree._root._right._right._key == _DEFAULT_KEY_3
-    assert_not_node(three_element_tree._root._right._right._left)
-    assert_not_node(three_element_tree._root._right._right._right)
+    assert three_element_tree.root._key == _DEFAULT_KEY
+    assert_not_node(three_element_tree.root._left)
+    assert three_element_tree.root._right._key == _DEFAULT_KEY_2
+    assert_not_node(three_element_tree.root._right._left)
+    assert three_element_tree.root._right._right._key == _DEFAULT_KEY_3
+    assert_not_node(three_element_tree.root._right._right._left)
+    assert_not_node(three_element_tree.root._right._right._right)
 
 
 def test_zero_element_tree_find_failure(zero_element_tree):
@@ -113,55 +113,75 @@ def test_three_element_tree_find_failure(three_element_tree):
 def test_wikipedia_example_avl_tree_balanced_is_balanced(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree._root._key == 'j'
-    assert tree._root._left._key == 'f'
-    assert tree._root._right._key == 'p'
-    assert tree._root._left._left._key == 'd'
-    assert tree._root._left._right._key == 'g'
-    assert tree._root._right._left._key == 'l'
-    assert tree._root._right._right._key == 'v'
-    assert tree._root._left._left._left._key == 'c'
-    assert tree._root._right._left._right._key == 'n'
-    assert tree._root._right._right._left._key == 's'
-    assert tree._root._right._right._right._key == 'x'
-    assert tree._root._right._right._left._left._key == 'q'
-    assert tree._root._right._right._left._right._key == 'u'
+    assert tree.root._key == 'j'
+    assert tree.root._left._key == 'f'
+    assert tree.root._right._key == 'p'
+    assert tree.root._left._left._key == 'd'
+    assert tree.root._left._right._key == 'g'
+    assert tree.root._right._left._key == 'l'
+    assert tree.root._right._right._key == 'v'
+    assert tree.root._left._left._left._key == 'c'
+    assert tree.root._right._left._right._key == 'n'
+    assert tree.root._right._right._left._key == 's'
+    assert tree.root._right._right._right._key == 'x'
+    assert tree.root._right._right._left._left._key == 'q'
+    assert tree.root._right._right._left._right._key == 'u'
 
 
 def test_wikipedia_example_avl_tree_balanced_heights(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree._root._height == 5
-    assert tree._root._left._height == 3
-    assert tree._root._right._height == 4
-    assert tree._root._left._left._height == 2
-    assert tree._root._left._right._height == 1
-    assert tree._root._right._left._height == 2
-    assert tree._root._right._right._height == 3
-    assert tree._root._left._left._left._height == 1
-    assert tree._root._right._left._right._height == 1
-    assert tree._root._right._right._left._height == 2
-    assert tree._root._right._right._right._height == 1
-    assert tree._root._right._right._left._left._height == 1
-    assert tree._root._right._right._left._right._height == 1
+    assert tree.root._height == 5
+    assert tree.root._left._height == 3
+    assert tree.root._right._height == 4
+    assert tree.root._left._left._height == 2
+    assert tree.root._left._right._height == 1
+    assert tree.root._right._left._height == 2
+    assert tree.root._right._right._height == 3
+    assert tree.root._left._left._left._height == 1
+    assert tree.root._right._left._right._height == 1
+    assert tree.root._right._right._left._height == 2
+    assert tree.root._right._right._right._height == 1
+    assert tree.root._right._right._left._left._height == 1
+    assert tree.root._right._right._left._right._height == 1
 
 
-def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
-    tree = wikipedia_example_avl_tree_balanced
+# todo: test with rebalancing off?
+# def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
+#     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree._root._balance_factor == 1
-    assert tree._root._left._balance_factor == -1
-    assert tree._root._right._balance_factor == 1
-    assert tree._root._left._left._balance_factor == -1
-    assert tree._root._left._right._balance_factor == 0
-    assert tree._root._right._left._balance_factor == 1
-    assert tree._root._right._right._balance_factor == -1
-    assert tree._root._left._left._left._balance_factor == 0
-    assert tree._root._right._left._right._balance_factor == 0
-    assert tree._root._right._right._left._balance_factor == 0
-    assert tree._root._right._right._right._balance_factor == 0
-    assert tree._root._right._right._left._left._balance_factor == 0
-    assert tree._root._right._right._left._right._balance_factor == 0
+#     assert tree.root._balance_factor == 1
+#     assert tree.root._left._balance_factor == -1
+#     assert tree.root._right._balance_factor == 1
+#     assert tree.root._left._left._balance_factor == -1
+#     assert tree.root._left._right._balance_factor == 0
+#     assert tree.root._right._left._balance_factor == 1
+#     assert tree.root._right._right._balance_factor == -1
+#     assert tree.root._left._left._left._balance_factor == 0
+#     assert tree.root._right._left._right._balance_factor == 0
+#     assert tree.root._right._right._left._balance_factor == 0
+#     assert tree.root._right._right._right._balance_factor == 0
+#     assert tree.root._right._right._left._left._balance_factor == 0
+#     assert tree.root._right._right._left._right._balance_factor == 0
+
+
+# todo: use or modify existing fixtures
+def test_simple_right_rotation(zero_element_tree):
+    zero_element_tree.insert(3)
+    zero_element_tree.insert(2)
+    zero_element_tree.insert(1)
+    assert zero_element_tree.root._key == 2
+    assert zero_element_tree.root._left._key == 1
+    assert zero_element_tree.root._right._key == 3
+    assert zero_element_tree.root._height == 2
+    assert zero_element_tree.root._balance_factor == 0
+
+
+# def test_simple_left_rotation(zero_element_tree):
+#     zero_element_tree.insert(1)
+#     zero_element_tree.insert(2)
+#     zero_element_tree.insert(3)
+    # import pdb; pdb.set_trace()
 
 
 if __name__ == '__main__':
