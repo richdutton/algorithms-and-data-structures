@@ -39,10 +39,27 @@ def three_element_tree(two_element_tree):
 
 
 @pytest.fixture
-def wikipedia_example_avl_tree_balanced(zero_element_tree):
+def zero_element_rebalancing_tree():
+    return _TREE_TYPE(rebalance=True)
+
+
+def _insert_without_rebalance(tree, node):
+    tree.insert(node)
+    assert not _TREE_TYPE.rebalanced
+
+
+def _insert_with_rebalance(tree, node):
+    tree.insert(node)
+    assert _TREE_TYPE.rebalanced
+
+
+# TODO: permute insertions / set seed randomly as parameter to fixture
+@pytest.fixture
+def wikipedia_example_avl_tree_balanced(zero_element_rebalancing_tree):
+    zero_element_tree = zero_element_rebalancing_tree
     tree = zero_element_tree
     for node in ['j', 'f', 'p', 'd', 'g', 'l', 'v', 'c', 'n', 's', 'x', 'q', 'u']:
-        tree.insert(node)
+        _insert_without_rebalance(tree, node)
     return tree
 
 
@@ -110,6 +127,7 @@ def test_three_element_tree_find_failure(three_element_tree):
     assert _DEFAULT_KEY_4 not in three_element_tree
 
 
+# https://en.wikipedia.org/wiki/AVL_tree
 def test_wikipedia_example_avl_tree_balanced_is_balanced(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
@@ -146,16 +164,17 @@ def test_wikipedia_example_avl_tree_balanced_heights(wikipedia_example_avl_tree_
     assert tree.root._right._right._left._right._height == 1
 
 
+# balance_factors inverted vs. wikipedia page, per MIT method
 def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_avl_tree_balanced):
     tree = wikipedia_example_avl_tree_balanced
 
-    assert tree.root._balance_factor == 1
-    assert tree.root._left._balance_factor == -1
-    assert tree.root._right._balance_factor == 1
-    assert tree.root._left._left._balance_factor == -1
+    assert tree.root._balance_factor == -1
+    assert tree.root._left._balance_factor == 1
+    assert tree.root._right._balance_factor == -1
+    assert tree.root._left._left._balance_factor == 1
     assert tree.root._left._right._balance_factor == 0
-    assert tree.root._right._left._balance_factor == 1
-    assert tree.root._right._right._balance_factor == -1
+    assert tree.root._right._left._balance_factor == -1
+    assert tree.root._right._right._balance_factor == 1
     assert tree.root._left._left._left._balance_factor == 0
     assert tree.root._right._left._right._balance_factor == 0
     assert tree.root._right._right._left._balance_factor == 0
@@ -164,17 +183,52 @@ def test_wikipedia_example_avl_tree_balanced_balance_factors(wikipedia_example_a
     assert tree.root._right._right._left._right._balance_factor == 0
 
 
-# todo: use or modify existing fixtures
-def test_simple_right_rotation(zero_element_tree):
-    zero_element_tree.insert(3)
-    zero_element_tree.insert(2)
-    zero_element_tree.insert(1)
-    assert zero_element_tree.root._key == 2
-    assert zero_element_tree.root._left._key == 1
-    assert zero_element_tree.root._right._key == 3
-    assert zero_element_tree.root._height == 2
-    assert zero_element_tree.root._balance_factor == 0
+def _assert_node(element, key, height, balance_factor):
+    assert element._key == key
+    assert element._height == height
+    assert element._balance_factor == balance_factor
 
+
+# todo: use or modify existing fixtures
+def test_simple_right_rotation(zero_element_rebalancing_tree):
+    zero_element_tree = zero_element_rebalancing_tree
+    _insert_without_rebalance(zero_element_tree, 3)
+    _insert_without_rebalance(zero_element_tree, 2)
+    _insert_with_rebalance(zero_element_tree, 1)
+    _assert_node(zero_element_tree.root, 2, 2, 0)
+    _assert_node(zero_element_tree.root._left, 1, 1, 0)
+    _assert_node(zero_element_tree.root._right, 3, 1, 0)
+
+
+def test_right_rotation_under_parent(zero_element_rebalancing_tree):
+    zero_element_tree = zero_element_rebalancing_tree
+    _insert_without_rebalance(zero_element_tree, 4)
+    _insert_without_rebalance(zero_element_tree, 3)
+    _insert_without_rebalance(zero_element_tree, 5)
+    _insert_without_rebalance(zero_element_tree, 2)
+    _insert_with_rebalance(zero_element_tree, 1)
+    _assert_node(zero_element_tree.root, 4, 3, 1)
+    _assert_node(zero_element_tree.root._left, 2, 2, 0)
+    _assert_node(zero_element_tree.root._right, 5, 1, 0)
+    _assert_node(zero_element_tree.root._left._left, 1, 1, 0)
+    _assert_node(zero_element_tree.root._left._right, 3, 1, 0)
+
+
+# https://www.quora.com/Why-is-it-that-rebalancing-nodes-in-an-AVL-tree-may-trickle-up-so-that-nodes-at-higher-nodes-need-to-be-fixed-too
+def test_quora_right_rotation_with_subtrees(zero_element_rebalancing_tree):
+    zero_element_tree = zero_element_rebalancing_tree
+    _insert_without_rebalance(zero_element_tree, 20)
+    _insert_without_rebalance(zero_element_tree, 10)
+    _insert_without_rebalance(zero_element_tree, 30)
+    _insert_without_rebalance(zero_element_tree, 5)
+    _insert_without_rebalance(zero_element_tree, 15)
+    _insert_with_rebalance(zero_element_tree, 9)
+    _assert_node(zero_element_tree.root, 10, 3, 0)
+    _assert_node(zero_element_tree.root._left, 5, 2, -1)
+    _assert_node(zero_element_tree.root._right, 20, 2, 0)
+    _assert_node(zero_element_tree.root._left._right, 9, 1, 0)
+    _assert_node(zero_element_tree.root._right._left, 15, 1, 0)
+    _assert_node(zero_element_tree.root._right._right, 30, 1, 0)
 
 # def test_simple_left_rotation(zero_element_tree):
 #     zero_element_tree.insert(1)

@@ -1,5 +1,5 @@
-#pylint:disable=C0103
-import .bst
+# pylint:disable=C0103
+from . import bst
 
 
 def height(node):
@@ -38,7 +38,8 @@ Supports insert, find, and delete-min operations in O(lg n) time.
 
     def right_rotate(self, x):
         y = x.left
-        y.parent = x.parent
+        y.parent = x.parent  # 1
+        # 2
         if y.parent is None:
             self.root = y
         else:
@@ -46,11 +47,15 @@ Supports insert, find, and delete-min operations in O(lg n) time.
                 y.parent.left = y
             elif y.parent.right is x:
                 y.parent.right = y
-        x.left = y.right
+
+        x.left = y.right  # 3
+        # 4
         if x.left is not None:
             x.left.parent = x
-        y.right = x
-        x.parent = y
+
+        y.right = x  # 5
+        x.parent = y  # 6
+
         update_height(x)
         update_height(y)
 

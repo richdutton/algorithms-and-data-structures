@@ -8,8 +8,7 @@ InsertionPoint = Enum('InsertionPoint', '_left _right root')
 _REBALANCE = True
 
 
-# todo: would it be better if the tree were responsible for the rotations?
-#       rather than keeping reference to parent would it be easier to check balance of child rather than self?
+# TODO: rather than keeping reference to parent would it be easier to check balance of child rather than self?
 #
 class Node:
     def __init__(self, key, parent, insertion_point, do_not_rebalance):
@@ -52,7 +51,7 @@ class Node:
 
         self._update_height_and_balance_factor()
 
-    # todo: augment with new logic in right rotation when have tested and clarified same
+    # TODO: augment with new logic in right rotation when have tested and clarified same
     def _left_rotation(self):
         assert self._right._right is None
         self._right._left = self
@@ -61,7 +60,7 @@ class Node:
     def _rotation(self, insertions):
         assert len(insertions) >= 2
 
-        # todo: we've already checked balance factor but we're going to have to check it again here
+        # TODO: we've already checked balance factor but we're going to have to check it again here
         # if height(node.left) >= 2 + height(node.right):
         if insertions[0] == InsertionPoint._left:
             # if height(node.left.left) >= height(node.left.right):
@@ -75,13 +74,14 @@ class Node:
             if insertions[1] == InsertionPoint._right:
                 self._left_rotation()
             else:
-                self._right.right_rotation()
+                self._right._right_rotation()
                 self._left_rotation()
 
     def _rebalance(self, insertions):
         if self._update_height_and_balance_factor() and not self._do_not_rebalance:
+            AVLTree.rebalanced = True
             self._rotation(insertions)
-            self._parent._rebalance(insertions)  # todo: 0% sure insertions is valid at this stage
+            self._parent._rebalance(insertions)  # TODO: 0% sure insertions is valid at this stage
 
     def insert(self, key):
         insertions = self._insert_key(key)
@@ -107,18 +107,25 @@ class Node:
         return abs(self._balance_factor) > 1
 
 
-# todo: thoroughly unit test right rotation
-#       move away from InsertionPoint in favor of identity check
-#       lose the insertion point
-#       fix up _left_rotation
-#       remove do_not_rebalance hack in favor of monkeypatching
+# TODO: move away from InsertionPoint in favor of identity check
+#       lose the insertion point / insertions
+#       implement _left_rotation
+#       remove do_not_rebalance hack in favor of monkeypatching or just careful construction of trees
+#       AVLTree.rebalanced hack (is there a better way?)
+#       potentially move most of logic from node into tree
+#
 class AVLTree:
+    rebalanced = False
+
     def __init__(self, rebalance):
         self.root = None
-        # todo: this is lame; could just monkeypatch it
+        # TODO: this is lame; could just monkeypatch it
         self._rebalance = rebalance
+        AVLTree.rebalanced = False
 
     def insert(self, key):
+        self.rebalanced = False
+
         if not self.root:
             self.root = Node(key, self, InsertionPoint.root, not self._rebalance)
         else:
