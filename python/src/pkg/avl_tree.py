@@ -33,7 +33,38 @@ class Node:
         return (InsertionPoint.root if isinstance(self._parent, AVLTree)
                 else (InsertionPoint._left if self._parent._left is self else InsertionPoint._right))
 
+    def _rotate_right_or_left(self, direction):
+        other_direction = InsertionPoint._right if direction is InsertionPoint._left else InsertionPoint._left
+
+        x = self
+        y = getattr(self, other_direction.name)
+
+        y._parent = x._parent
+        setattr(x._parent, self._insertion_point.name, y)
+        setattr(x, other_direction.name, getattr(y, direction.name))
+        if getattr(y, direction.name) is not None:
+            getattr(y, direction.name)._parent = x
+        x._parent = y
+        setattr(y, direction.name, x)
+
+        self._update_height_and_balance_factor()
+
     def _rotate_right(self):
+        self._rotate_right_or_left(InsertionPoint._right)
+        # x = self
+        # y = self._left
+
+        # y._parent = x._parent
+        # setattr(x._parent, self._insertion_point.name, y)
+        # x._left = y._right
+        # if y._right is not None:
+        #     y._right._parent = x
+        # x._parent = y
+        # y._right = x
+
+        # self._update_height_and_balance_factor()
+
+    def _rotate_right_old(self):
         old_left = self._left
         self._left._right, self._left = self, self._left._right  # 1a,b
         if self._left is not None:
@@ -103,7 +134,8 @@ class Node:
             return False if self._right is None else key in self._right
 
 
-# TODO: implement _left_rotation
+# TODO: clean up right rotation
+#       implement _left_rotation
 #        test double rotation
 #       remove do_not_rebalance hack in favor of monkeypatching or just careful construction of trees
 #       AVLTree.rebalanced hack (is there a better way?)
